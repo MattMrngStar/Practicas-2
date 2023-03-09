@@ -6,7 +6,7 @@
 
  
 
-#define MAX_POKEMONS 1000
+#define MAX_POKEMONS 1010
 
 #define MAX_STATS 11
 
@@ -64,7 +64,7 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     
 
-    char line[1024];
+    char line[1191];
 
     int i = 0;
 
@@ -72,7 +72,7 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     // Abrir el archivo en modo lectura
 
-    FILE *fp = fopen("/.filename", "r");
+    FILE *fp = fopen("./pokemon.csv", "r");
 
     if (fp == NULL) {
 
@@ -86,7 +86,7 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     // Leer el archivo línea por línea y cargar los datos en la estructura de la base de datos
 
-    while (fgets(line, 1024, fp)) {
+    while (fgets(line, 1191, fp)) {
 
         if (i == 0) {
 
