@@ -72,7 +72,7 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     // Abrir el archivo en modo lectura
 
-    fp = fopen("/.Pokemon.xlsx", "r");
+    fp = fopen("/.Pokemon.cvs", "r");
 
     if (fp == NULL) {
 
