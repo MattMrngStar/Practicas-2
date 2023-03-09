@@ -62,7 +62,7 @@ typedef struct node {
 
 void loadDatabase(char *filename, Pokemon *database, int *size) {
 
-    FILE *fp;
+    
 
     char line[1024];
 
@@ -72,7 +72,7 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     // Abrir el archivo en modo lectura
 
-    fp = fopen("/.Pokemon.cvs", "r");
+    FILE *fp = fopen("/.filename", "r");
 
     if (fp == NULL) {
 
