@@ -86,49 +86,17 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     // Leer el archivo línea por línea y cargar los datos en la estructura de la base de datos
 
-    while (fgets(line, 1191, fp)) {
+     char buffer[64];
+    char *status =  NULL;
 
-        if (i == 0) {
-
+    do{
+        status = fgets(buffer, sizeof(buffer),fp);
+        if(status != NULL){
             i++;
-
-            continue;
-
+            printf("%s",buffer);
         }
-
-        sscanf(line, "%d,%[^,],%d,%[^,],%[^,],%d,%d,%d,%d,%d,%d,%d",
-
-               &database[i-1].id,
-
-               database[i-1].name,
-
-               &database[i-1].generation,
-
-               database[i-1].type1,
-
-               database[i-1].type2,
-
-               &database[i-1].total,
-
-               &database[i-1].hp,
-
-               &database[i-1].attack,
-
-               &database[i-1].defense,
-
-               &database[i-1].spAtk,
-
-               &database[i-1].spDef,
-
-               &database[i-1].speed);
-
-        i++;
-
-    }
-
- 
-
-    // Cerrar el archivo
+    }while (status !=NULL);
+    printf("\n");
 
     fclose(fp);
 
