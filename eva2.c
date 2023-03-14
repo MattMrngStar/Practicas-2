@@ -22,7 +22,7 @@ typedef struct {
 
     char name[MAX_NAME_LENGTH];
 
-    int generation;
+    char form[MAX_NAME_LENGTH];
 
     char type1[MAX_NAME_LENGTH];
 
@@ -42,6 +42,8 @@ typedef struct {
 
     int speed;
 
+    int generation;
+
 } Pokemon;
 
  
@@ -60,7 +62,7 @@ typedef struct node {
 
 // Función para cargar la base de datos de pokémon
 
-void loadDatabase(char *filename, Pokemon *database, int *size) {
+void loadDatabase(char *filename, PokemonList **database, int *size) {
 
     
 
@@ -86,17 +88,36 @@ void loadDatabase(char *filename, Pokemon *database, int *size) {
 
     // Leer el archivo línea por línea y cargar los datos en la estructura de la base de datos
 
-     char buffer[64];
+    char buffer[1191];
     char *status =  NULL;
+    PokemonList *current, *prev;
+    *database = NULL;
 
-    do{
-        status = fgets(buffer, sizeof(buffer),fp);
-        if(status != NULL){
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        
+        
+        current = (PokemonList *) malloc(sizeof(PokemonList));
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            // Leemos los datos del archivo y los asignamos a la estructura de Pokemon dentro del nodo actual
+            sscanf(buffer, "%d,%49[^,],%49[^,],%49[^,],%49[^,],%d,%d,%d,%d,%d,%d,%d,%d", 
+            &current->pokemon.id, current->pokemon.name, current->pokemon.form, current->pokemon.type1, current->pokemon.type2, &current->pokemon.total, &current->pokemon.hp, &current->pokemon.attack, &current->pokemon.defense, &current->pokemon.spAtk, &current->pokemon.spDef, &current->pokemon.speed, &current->pokemon.generation);
+            // Agregamos el nodo actual a la lista enlazada
+            current->next = NULL;
+            if (*database == NULL) 
+            {
+                *database = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
             i++;
-            printf("%s",buffer);
-        }
-    }while (status !=NULL);
-    printf("\n");
+           
+    }
+    
 
     fclose(fp);
 
@@ -136,11 +157,13 @@ void showRange(Pokemon *database, int n) {
 
     for (int i = 0; i < n; i++) {
 
-        printf("%d %s %d %s %s %d %d %d %d %d %d %d\\n",
+        printf("%d %s %s %d %s %s %d %d %d %d %d %d %d\\n",
 
                database[i].id,
 
                database[i].name,
+
+               database[i].form,
 
                database[i].generation,
 
@@ -490,10 +513,7 @@ int main() {
 
  
 
-    // Cargar la base de datos
-
-    loadDatabase("pokemon.csv", database, &databaseSize);
-
+    
  
 
     // Loop infinito para recibir comandos desde la terminal
