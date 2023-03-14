@@ -125,7 +125,7 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
 
     // Guardar la cantidad de registros en la base de datos
 
-    *size = i-1;
+    *size = i;
 
 }
 
@@ -143,7 +143,7 @@ void showSize(int size) {
 
 // Función para mostrar los primeros n registros de la base de datos
 
-void showRange(Pokemon *database, int n) {
+void showRange(PokemonList *database, int n) {
 
     if (n > MAX_POKEMONS) {
 
@@ -154,37 +154,25 @@ void showRange(Pokemon *database, int n) {
     }
 
     printf("Los primeros %d registros de la base de datos son:\\n", n);
-
-    for (int i = 0; i < n; i++) {
-
-        printf("%d %s %s %d %s %s %d %d %d %d %d %d %d\\n",
-
-               database[i].id,
-
-               database[i].name,
-
-               database[i].form,
-
-               database[i].generation,
-
-               database[i].type1,
-
-               database[i].type2,
-
-               database[i].total,
-
-               database[i].hp,
-
-               database[i].attack,
-
-               database[i].defense,
-
-               database[i].spAtk,
-
-               database[i].spDef,
-
-               database[i].speed);
-
+   PokemonList *current = database;
+    int i = 0;
+    while (current != NULL && i < n) {
+        printf("%d %s %s %s %s %d %d %d %d %d %d %d %d\\n",
+               current->pokemon.id,
+               current->pokemon.name,
+               current->pokemon.form,  
+               current->pokemon.type1,
+               current->pokemon.type2,
+               current->pokemon.total,
+               current->pokemon.hp,
+               current->pokemon.attack,
+               current->pokemon.defense,
+               current->pokemon.spAtk,
+               current->pokemon.spDef,
+               current->pokemon.speed,
+               current->pokemon.generation);
+        current = current->next;
+        i++;
     }
 
 }
