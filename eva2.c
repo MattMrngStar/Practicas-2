@@ -64,7 +64,7 @@ typedef struct node {
 
 void loadDatabase(char *filename, PokemonList **database, int *size) {
 
-    
+
 
     char line[1191];
 
@@ -92,31 +92,8 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
     char *status =  NULL;
     PokemonList *current, *prev;
     *database = NULL;
-
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        
-        
-        current = (PokemonList *) malloc(sizeof(PokemonList));
-            if (current == NULL) {
-                printf("No se ha podido asignar memoria.\\n");
-                exit(1);
-            }
-            // Leemos los datos del archivo y los asignamos a la estructura de Pokemon dentro del nodo actual
-            sscanf(buffer, "%d,%49[^,],%49[^,],%49[^,],%49[^,],%d,%d,%d,%d,%d,%d,%d,%d", 
-            &current->pokemon.id, current->pokemon.name, current->pokemon.form, current->pokemon.type1, current->pokemon.type2, &current->pokemon.total, &current->pokemon.hp, &current->pokemon.attack, &current->pokemon.defense, &current->pokemon.spAtk, &current->pokemon.spDef, &current->pokemon.speed, &current->pokemon.generation);
-            // Agregamos el nodo actual a la lista enlazada
-            current->next = NULL;
-            if (*database == NULL) 
-            {
-                *database = current;
-            } 
-            else {
-                prev->next = current;
-            }
-            prev = current;
-            i++;
-           
-    }
+    struct node *base = (struct node *)malloc(sizeof(struct node));
+   
     
 
     fclose(fp);
@@ -154,25 +131,23 @@ void showRange(PokemonList *database, int n) {
     }
 
     printf("Los primeros %d registros de la base de datos son:\\n", n);
-   PokemonList *current = database;
-    int i = 0;
-    while (current != NULL && i < n) {
+   
+    for (int i = 0; i < n && database != NULL; i++) {
         printf("%d %s %s %s %s %d %d %d %d %d %d %d %d\\n",
-               current->pokemon.id,
-               current->pokemon.name,
-               current->pokemon.form,  
-               current->pokemon.type1,
-               current->pokemon.type2,
-               current->pokemon.total,
-               current->pokemon.hp,
-               current->pokemon.attack,
-               current->pokemon.defense,
-               current->pokemon.spAtk,
-               current->pokemon.spDef,
-               current->pokemon.speed,
-               current->pokemon.generation);
-        current = current->next;
-        i++;
+             database->pokemon.id,
+               database->pokemon.name,
+               database->pokemon.form,
+               database->pokemon.type1,
+               database->pokemon.type2,
+               database->pokemon.total,
+               database->pokemon.hp,
+               database->pokemon.attack,
+               database->pokemon.defense,
+               database->pokemon.spAtk,
+               database->pokemon.spDef,
+               database->pokemon.speed,
+               database->pokemon.generation);
+        database = database->next;
     }
 
 }
@@ -522,9 +497,18 @@ int main() {
 
         } else if (strcmp(command, "load") == 0) {
 
-            printf("Cargando la base de datos...\\n");
+              char archivo[100];
+              printf("Ingrese el nombre del archivo de base de datos: ");
+              scanf("%s", archivo);
+              if (strcmp(archivo, "pokemon.csv") == 0){
+                printf("Cargando la base de datos...\\n");
+                loadDatabase("pokemon.csv", database, &databaseSize);
 
-            loadDatabase("pokemon.csv", database, &databaseSize);
+              }
+
+            
+
+            
 
         } else if (strcmp(command, "size") == 0) {
 
