@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_POKEMONS 1010
+#define MAX_POKEMONS 1190
 #define MAX_STATS 11
 #define MAX_NAME_LENGTH 50
 
@@ -40,7 +40,6 @@ typedef struct node {
     int spDef;
     int speed;
     int generation;
-
     Pokemon pokemon;
     struct node *next;
 } PokemonList;
@@ -49,7 +48,7 @@ typedef struct node {
 void loadDatabase(char *filename, PokemonList **database, int *size) {
     int i = 0;
     // Abrir el archivo en modo lectura
-    FILE *fp = fopen("./pokemon.csv", "r");
+    FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         printf("No se ha podido abrir el archivo.\\n");
         exit(1);
@@ -57,12 +56,12 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
     }
 
     // Leer el archivo línea por línea y cargar los datos en la estructura de la base de datos
-    char buffer[1191];
-    char *status =  NULL;
+    char pokemones[1191];
+    //char *status =  NULL;
     PokemonList *current, *prev;
     *database = NULL;
 
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+    while (fgets(pokemones, sizeof(pokemones), fp) != NULL) {
         
         
         current = (PokemonList *) malloc(sizeof(PokemonList ));
@@ -71,8 +70,8 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
                 exit(1);
             }
             // Leemos los datos del archivo y los asignamos a la estructura de Pokemon dentro del nodo actual
-            sscanf(buffer, "%d,%49[^,],%49[^,],%49[^,],%49[^,],%d,%d,%d,%d,%d,%d,%d,%d", 
-            &current->pokemon.id, current->pokemon.name, current->pokemon.form, current->pokemon.type1, current->pokemon.type2, &current->pokemon.total, &current->pokemon.hp, &current->pokemon.attack, &current->pokemon.defense, &current->pokemon.spAtk, &current->pokemon.spDef, &current->pokemon.speed, &current->pokemon.generation);
+            sscanf(pokemones, "%d,%49[^,],%49[^,],%49[^,],%49[^,],%d,%d,%d,%d,%d,%d,%d,%d", 
+            &current->id, current->name, current->form, current->type1, current->type2, &current->total, &current->hp, &current->attack, &current->defense, &current->spAtk, &current->spDef, &current->speed, &current->generation);
             // Agregamos el nodo actual a la lista enlazada
             current->next = NULL;
             if (*database == NULL) 
@@ -86,8 +85,9 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
             i++;
            
     }
-
+    //cerrar el archivo
     fclose(fp);
+
     // Guardar la cantidad de registros en la base de datos
     *size = i;
 
@@ -110,28 +110,32 @@ void showRange(PokemonList *database, int n) {
 
     printf("Los primeros %d registros de la base de datos son:\n", n);
    
+    PokemonList *currentPokemon = database;
+
     for (int i = 0; i < n && database != NULL; i++) {
-        printf("%d,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d\n", 
-           database[i].id,
-           database[i].name,
-           database[i].form,
-           database[i].type1,
-           database[i].type2,
-           database[i].total,
-           database[i].hp,
-           database[i].attack,
-           database[i].defense,
-           database[i].spAtk,
-           database[i].spDef,
-           database[i].speed,
-           database[i].generation);
+        printf("%d, %s, %s, %s, %s, %d, %d, %d, %d, %d, %d, %d, %d\n", 
+           currentPokemon->id,
+           currentPokemon->name,
+           currentPokemon->form,
+           currentPokemon->type1,
+           currentPokemon->type2,
+           currentPokemon->total,
+           currentPokemon->hp,
+           currentPokemon->attack,
+           currentPokemon->defense,
+           currentPokemon->spAtk,
+           currentPokemon->spDef,
+           currentPokemon->speed,
+           currentPokemon->generation);
+
+        currentPokemon = currentPokemon->next;
        
     }
 
 }
 
 // Función para mostrar el registro con ID n
-void showPokemon(Pokemon *database, int id) {
+void showPokemon(PokemonList *database, int id) {
 
     if (id > MAX_POKEMONS) {
         printf("El valor de id es demasiado grande.\n");
@@ -156,7 +160,7 @@ void showPokemon(Pokemon *database, int id) {
 }
 
 // Función para buscar pokémon por stat
-void searchPokemon(Pokemon *database, int size, char *stat, int value, PokemonList **result) {
+/*void searchPokemon(PokemonList *database, int size, char *stat, int value, PokemonList **result) {
     // Crear la lista de resultados
     *result = NULL;
 
@@ -256,10 +260,10 @@ void showResultList(PokemonList *result){
 
     PokemonList *current = result;
     while (current != NULL) {
-        printf("%d %s %d %s %s %d %d %d %d %d %d %d\n",
+        printf("%d %s %s %s %s %d %d %d %d %d %d %d\n",
                current->pokemon.id,
                current->pokemon.name,
-               current->pokemon.generation,
+               current->pokemon.form,
                current->pokemon.type1,
                current->pokemon.type2,
                current->pokemon.total,
@@ -268,7 +272,8 @@ void showResultList(PokemonList *result){
                current->pokemon.defense,
                current->pokemon.spAtk,
                current->pokemon.spDef,
-               current->pokemon.speed);
+               current->pokemon.speed,
+               current->pokemon.generation);
         current = current->next;
     }
 
@@ -308,11 +313,11 @@ void saveResultList(char *filename, PokemonList *result) {
     fclose(fp);
 
 }
-
+*/
 int main() {
-    Pokemon database[MAX_POKEMONS];
+    PokemonList *database;
     int databaseSize = 0;
-    PokemonList *searchResult = NULL;
+//    PokemonList *searchResult = NULL;
     char command[10];
     int value;
     char stat[MAX_NAME_LENGTH];
@@ -329,8 +334,9 @@ int main() {
             break;
 
         } else if (strcmp(command, "load") == 0) {
+                scanf("%s", filename);
                 printf("Cargando la base de datos... Exito\n");
-                loadDatabase("pokemon.csv", &database, &databaseSize);
+                loadDatabase(filename, &database, &databaseSize);
 
         } else if (strcmp(command, "size") == 0) {
             showSize(databaseSize);
@@ -341,18 +347,18 @@ int main() {
 
         } else if (strcmp(command, "show") == 0) {
             scanf("%d", &value);
-            showPokemon(database, value);
+            //showPokemon(database, value);
 
         } else if (strcmp(command, "search") == 0) {
             scanf("%s %d", stat, &value);
-            searchPokemon(database, databaseSize, stat, value, &searchResult);
+            //searchPokemon(database, databaseSize, stat, value, &searchResult);
 
-        } else if (strcmp(command, "show") == 0 && strcmp(stat, "search") == 0) {
-            showResultList(searchResult);
+        //} else if (strcmp(command, "show") == 0 && strcmp(stat, "search") == 0) {
+        //   showResultList(searchResult);
 
-        } else if (strcmp(command, "save") == 0) {
-            scanf("%s", filename);
-            saveResultList(filename, searchResult);
+        //} else if (strcmp(command, "save") == 0) {
+        //    scanf("%s", filename);
+        //    saveResultList(filename, searchResult);
 
         } else {
             printf("Comando no válido. Intente de nuevo.\n");
