@@ -54,7 +54,7 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
         exit(1);
 
     }
-
+    printf("Cargando la base de datos... Exito\n");
     // Leer el archivo línea por línea y cargar los datos en la estructura de la base de datos
     char pokemones[1191];
     //char *status =  NULL;
@@ -142,28 +142,29 @@ void showPokemon(PokemonList *database, int id) {
         return;
     }
     printf("El pokemon con %d id es:\n", id);
+     while (currentPokemon != NULL) {
+        if (currentPokemon->id == id) {
+            printf("%d, %s, %s, %s, %s, %d, %d, %d, %d, %d, %d, %d, %d\n",
+                   currentPokemon->id,
+                   currentPokemon->name,
+                   currentPokemon->form,
+                   currentPokemon->type1,
+                   currentPokemon->type2,
+                   currentPokemon->total,
+                   currentPokemon->hp,
+                   currentPokemon->attack,
+                   currentPokemon->defense,
+                   currentPokemon->spAtk,
+                   currentPokemon->spDef,
+                   currentPokemon->speed,
+                   currentPokemon->generation);
+            return;
+        }
+        currentPokemon = currentPokemon->next;
+    }
 
-    currentPokemon = id;    
-    printf("%d %s %s %s %s %d %d %d %d %d %d %d %d \n",
-           currentPokemon->id,
-           currentPokemon->name,
-           currentPokemon->form,
-           currentPokemon->type1,
-           currentPokemon->type2,
-           currentPokemon->total,
-           currentPokemon->hp,
-           currentPokemon->attack,
-           currentPokemon->defense,
-           currentPokemon->spAtk,
-           currentPokemon->spDef,
-           currentPokemon->speed,
-           currentPokemon->generation);
-        
-        
+    printf("No se encontró un pokemon con ID %d.\n", id);
 }
-    
-
-
 
 
 // Función para buscar pokémon por stat
@@ -342,7 +343,6 @@ int main() {
 
         } else if (strcmp(command, "load") == 0) {
                 scanf("%s", filename);
-                printf("Cargando la base de datos... Exito\n");
                 loadDatabase(filename, &database, &databaseSize);
 
         } else if (strcmp(command, "size") == 0) {
@@ -354,7 +354,7 @@ int main() {
 
         } else if (strcmp(command, "show") == 0) {
             scanf("%d", &value);
-            //showPokemon(database, value);
+            showPokemon(database, value);
 
         } else if (strcmp(command, "search") == 0) {
             scanf("%s %d", stat, &value);
