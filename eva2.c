@@ -27,13 +27,27 @@ typedef struct {
 // Definición de la estructura de la lista de pokémons
 
 typedef struct node {
+    int id;
+    char name[MAX_NAME_LENGTH];
+    char form[MAX_NAME_LENGTH];
+    char type1[MAX_NAME_LENGTH];
+    char type2[MAX_NAME_LENGTH];
+    int total;
+    int hp;
+    int attack;
+    int defense;
+    int spAtk;
+    int spDef;
+    int speed;
+    int generation;
+
     Pokemon pokemon;
     struct node *next;
 } PokemonList;
 
 // Función para cargar la base de datos de pokémon
 void loadDatabase(char *filename, PokemonList **database, int *size) {
-
+    int i = 0;
     // Abrir el archivo en modo lectura
     FILE *fp = fopen("./pokemon.csv", "r");
     if (fp == NULL) {
@@ -43,11 +57,10 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
     }
 
     // Leer el archivo línea por línea y cargar los datos en la estructura de la base de datos
-    char buffer[100];
+    char buffer[1191];
     char *status =  NULL;
     PokemonList *current, *prev;
     *database = NULL;
-    int i = 0;
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
         
@@ -58,12 +71,8 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
                 exit(1);
             }
             // Leemos los datos del archivo y los asignamos a la estructura de Pokemon dentro del nodo actual
-            sscanf(buffer, "%d,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d", 
-            &current->pokemon.id, current->pokemon.name, current->pokemon.form, 
-            current->pokemon.type1, current->pokemon.type2, &current->pokemon.total, 
-            &current->pokemon.hp, &current->pokemon.attack, &current->pokemon.defense, 
-            &current->pokemon.spAtk, &current->pokemon.spDef, &current->pokemon.speed, 
-            &current->pokemon.generation);
+            sscanf(buffer, "%d,%49[^,],%49[^,],%49[^,],%49[^,],%d,%d,%d,%d,%d,%d,%d,%d", 
+            &current->pokemon.id, current->pokemon.name, current->pokemon.form, current->pokemon.type1, current->pokemon.type2, &current->pokemon.total, &current->pokemon.hp, &current->pokemon.attack, &current->pokemon.defense, &current->pokemon.spAtk, &current->pokemon.spDef, &current->pokemon.speed, &current->pokemon.generation);
             // Agregamos el nodo actual a la lista enlazada
             current->next = NULL;
             if (*database == NULL) 
@@ -102,13 +111,20 @@ void showRange(PokemonList *database, int n) {
     printf("Los primeros %d registros de la base de datos son:\n", n);
    
     for (int i = 0; i < n && database != NULL; i++) {
-        printf("%d %s %s %s %s %d %d %d %d %d %d %d %d\n", 
-         database->pokemon.id, database->pokemon.name, database->pokemon.form,
-         database->pokemon.type1, database->pokemon.type2, database->pokemon.total,
-         database->pokemon.hp, database->pokemon.attack, database->pokemon.defense,
-         database->pokemon.spAtk, database->pokemon.spDef, database->pokemon.speed,
-         database->pokemon.generation);
-         database = database->next;
+        printf("%d,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d\n", 
+           database[i].id,
+           database[i].name,
+           database[i].form,
+           database[i].type1,
+           database[i].type2,
+           database[i].total,
+           database[i].hp,
+           database[i].attack,
+           database[i].defense,
+           database[i].spAtk,
+           database[i].spDef,
+           database[i].speed,
+           database[i].generation);
        
     }
 
@@ -224,7 +240,8 @@ void searchPokemon(Pokemon *database, int size, char *stat, int value, PokemonLi
             node->next = *result;
             *result = node;
 
-    }   }
+        }    
+    }
 
 }
 
