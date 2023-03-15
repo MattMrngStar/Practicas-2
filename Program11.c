@@ -1,35 +1,38 @@
 #include <stdio.h>
-#include <stdint.h>
+#define MAX 100
 
-char nombres[3][20] = {"fulano", "mengano", "perano"};
+void printArray(int *pdata,int n){
 
-int main(void){
+    printf("\n The array is: \n");
 
-    char *a;
-    char (*b)[20];
-    char (*c)[3][20];
-
-    a = nombres[0];
-    printf("Imprime el contenido de la dirección almacenada en a: %s\n",a);
-    printf("Imprime el contenido de la dirección almacenada en a+1: %s\n",a+1);
-
-    b = nombres;
-    uint8_t sizeOfNombresElement = sizeof(nombres)/sizeof(nombres[0]);
-
-    for(uint8_t i = 0; i < sizeOfNombresElement; i++){
-        printf("Imprime el contenido de la dirección almacenada en b+%d: %s\n",i, (char *)(b+i));
+    for(int i = 0; i< n ;i++) {
+        printf("data[%d]: %d\n",i,  *(pdata+i) );
     }
+}
 
-    c = &nombres;
-    printf("Imprime el contenido de la dirección almacenada en c: %s\n", (char *) c);
-    printf("Imprime el contenido de la dirección almacenada en c+1: %20s\n", (char *) (c+1) );
+int main(){
+    int n;
+    int data[MAX];
+    int position;
 
-    printf("a  : %p\n",a);
-    printf("a+1: %p\n",a+1);
-    printf("b  : %p\n",b);
-    printf("b+1: %p\n",b+1);
-    printf("c  : %p\n",c);
-    printf("c+1: %p\n",c+1);
+    printf("Enter the length of the array: ");
+    scanf("%d", &n);
+    printf("Enter %d elements of the array \n",n);
 
+    for(int i = 0; i < n; i++){
+        scanf("%d", &data[i]);
+    }
+    printArray(data, n);
+
+    printf("\n Enter a position where you want to insert: ");
+    scanf("%d", &position);
+    position--;
+    for(int i = n-1;i >= position; i--){
+        data[i+1] = data[i];
+    }
+    printf("\nEnter the value: ");
+    scanf("%d", &data[position]);
+
+    printArray(data,n+1);
     return 0;
 }
