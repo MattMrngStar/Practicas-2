@@ -136,28 +136,35 @@ void showRange(PokemonList *database, int n) {
 
 // Función para mostrar el registro con ID n
 void showPokemon(PokemonList *database, int id) {
-
+ PokemonList *currentPokemon = database;
     if (id > MAX_POKEMONS) {
         printf("El valor de id es demasiado grande.\n");
         return;
     }
+    printf("El pokemon con %d id es:\n", id);
 
-    printf("%d %s %s %s %s %d %d %d %d %d %d %d %d\n",
-           database[id-1].id,
-           database[id-1].name,
-           database[id-1].form,
-           database[id-1].type1,
-           database[id-1].type2,
-           database[id-1].total,
-           database[id-1].hp,
-           database[id-1].attack,
-           database[id-1].defense,
-           database[id-1].spAtk,
-           database[id-1].spDef,
-           database[id-1].speed,
-           database[id-1].generation);
-
+    currentPokemon = id;    
+    printf("%d %s %s %s %s %d %d %d %d %d %d %d %d \n",
+           currentPokemon->id,
+           currentPokemon->name,
+           currentPokemon->form,
+           currentPokemon->type1,
+           currentPokemon->type2,
+           currentPokemon->total,
+           currentPokemon->hp,
+           currentPokemon->attack,
+           currentPokemon->defense,
+           currentPokemon->spAtk,
+           currentPokemon->spDef,
+           currentPokemon->speed,
+           currentPokemon->generation);
+        
+        
 }
+    
+
+
+
 
 // Función para buscar pokémon por stat
 /*void searchPokemon(PokemonList *database, int size, char *stat, int value, PokemonList **result) {
