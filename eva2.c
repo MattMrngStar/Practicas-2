@@ -166,9 +166,9 @@ void showPokemon(PokemonList *database, int id) {
     printf("No se encontró un pokemon con ID %d.\n", id);
 }
 
-
-// Función para buscar pokémon por stat
-/*void searchPokemon(PokemonList *database, int size, char *stat, int value, PokemonList **result) {
+/*
+//Función para buscar pokémon por stat
+void searchPokemon(PokemonList *database, int size, char *stat, int value, PokemonList **result) {
     // Crear la lista de resultados
     *result = NULL;
 
