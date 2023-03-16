@@ -66,7 +66,7 @@ void loadDatabase(char *filename, PokemonList **database, int *size) {
         
         current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
-                printf("No se ha podido asignar memoria.\\n");
+                printf("No se ha podido asignar memoria.\n");
                 exit(1);
             }
             // Leemos los datos del archivo y los asignamos a la estructura de Pokemon dentro del nodo actual
@@ -193,6 +193,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "name") == 0 && strcmp(currentPokemon->name, stat) == 0) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -208,6 +209,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "form") == 0 && strcmp(currentPokemon->form, stat) == 0) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -223,6 +225,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "type1") == 0 && strcmp(currentPokemon->type1, stat) == 0) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -238,6 +241,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "type2") == 0 && strcmp(currentPokemon->type2, stat) == 0) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -253,6 +257,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "total") == 0 && currentPokemon->total == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
            
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
@@ -268,6 +273,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             }
             prev = current;
         } else if (strcmp(stat, "hp") == 0 && currentPokemon->hp == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -283,6 +289,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;;
 
         } else if (strcmp(stat, "attack") == 0 && currentPokemon->attack == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -298,6 +305,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "defense") == 0 && currentPokemon->defense == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -313,6 +321,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;;
 
         } else if (strcmp(stat, "spAtk") == 0 && currentPokemon->spAtk == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -328,6 +337,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "spDef") == 0 && currentPokemon->spDef == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -343,6 +353,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "speed") == 0 && currentPokemon->speed == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
@@ -358,6 +369,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         } else if (strcmp(stat, "generation") == 0 && currentPokemon->generation == value) {
+            current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
