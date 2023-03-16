@@ -172,10 +172,10 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
     // Crear la lista de resultados
     *result = NULL;
     PokemonList *currentPokemon = database;
-     PokemonList *current, *prev;
+    PokemonList *current, *prev;
 
     // Recorrer la base de datos y agregar los pokémon que coincidan con la búsqueda a la lista de resultados
-     while (currentPokemon != NULL){
+     for (int i = 0; i < MAX_POKEMONS && database != NULL; i++){
         if (strcmp(stat, "id") == 0 && currentPokemon->id == value) {
              current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
@@ -198,6 +198,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
             }
+            strcpy(current->name, currentPokemon->name);
             current->next = NULL;
             if (*result == NULL) 
             {
@@ -374,6 +375,19 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
                 printf("No se ha podido asignar memoria.\\n");
                 exit(1);
             }
+            current->id = currentPokemon->id;  // copy the values of the matching pokemon to the new node
+            strcpy(current->name, currentPokemon->name);
+            strcpy(current->form, currentPokemon->form);
+            strcpy(current->type1, currentPokemon->type1);
+            strcpy(current->type2, currentPokemon->type2);
+            current->total = currentPokemon->total;
+            current->hp = currentPokemon->hp;
+            current->attack = currentPokemon->attack;
+            current->defense = currentPokemon->defense;
+            current->spAtk = currentPokemon->spAtk;
+            current->spDef = currentPokemon->spDef;
+            current->speed = currentPokemon->speed;
+            current->generation = currentPokemon->generation;
             current->next = NULL;
             if (*result == NULL) 
             {
@@ -485,20 +499,20 @@ int main() {
             scanf("%d", &value);
             showRange(database, value);
 
-        } else if (strcmp(command, "show") == 0) {
-            scanf("%d", &value);
-            showPokemon(database, value);
-
         } else if (strcmp(command, "search") == 0) {
             scanf("%s %d", stat, &value);
             searchPokemon(database, databaseSize, stat, value, &searchResult);
 
-        //} else if (strcmp(command, "show") == 0 && strcmp(stat, "search") == 0) {
-        //   showResultList(searchResult);
+        } else if (strcmp(command, "view") == 0) {
+          showResultList(searchResult);
 
-        //} else if (strcmp(command, "save") == 0) {
-        //    scanf("%s", filename);
-        //    saveResultList(filename, searchResult);
+        } else if (strcmp(command, "show") == 0) {
+            scanf("%d", &value);
+            showPokemon(database, value);  
+
+        } else if (strcmp(command, "save") == 0) {
+            scanf("%s", filename);
+            saveResultList(filename, searchResult);
 
         } else {
             printf("Comando no válido. Intente de nuevo.\n");
