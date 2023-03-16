@@ -175,7 +175,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
     PokemonList *current, *prev;
 
     // Recorrer la base de datos y agregar los pokémon que coincidan con la búsqueda a la lista de resultados
-     for (int i = 0; i < MAX_POKEMONS && database != NULL; i++){
+     while (currentPokemon != NULL)
         if (strcmp(stat, "id") == 0 && currentPokemon->id == value) {
              current = (PokemonList *) malloc(sizeof(PokemonList ));
             if (current == NULL) {
@@ -399,7 +399,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             prev = current;
 
         }    
-    }
+    
 
 }
 
@@ -447,7 +447,7 @@ void saveResultList(char *filename, PokemonList *result) {
     // Guardar los datos de la lista de resultados en el archivo
     PokemonList *currentPokemon = result;
     while (currentPokemon != NULL) {
-        fprintf(fp, "%d,%s,%d,%s,%s,%d,%d,%d,%d,%d,%d,%d\\n",
+        fprintf(fp, "%d,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d\n",
                    currentPokemon->id,
                    currentPokemon->name,
                    currentPokemon->form,
@@ -503,7 +503,7 @@ int main() {
             scanf("%s %d", stat, &value);
             searchPokemon(database, databaseSize, stat, value, &searchResult);
 
-        } else if (strcmp(command, "view") == 0) {
+        } else if (strcmp(command, "show") == 0 && strcmp(stat, "search") == 0) {
           showResultList(searchResult);
 
         } else if (strcmp(command, "show") == 0) {
