@@ -40,7 +40,7 @@ typedef struct node {
     int spDef;
     int speed;
     int generation;
-    Pokemon pokemon;
+    
     struct node *next;
 } PokemonList;
 
@@ -166,91 +166,211 @@ void showPokemon(PokemonList *database, int id) {
     printf("No se encontró un pokemon con ID %d.\n", id);
 }
 
-/*
+
 //Función para buscar pokémon por stat
 void searchPokemon(PokemonList *database, int size, char *stat, int value, PokemonList **result) {
     // Crear la lista de resultados
     *result = NULL;
+    PokemonList *currentPokemon = database;
+     PokemonList *current, *prev;
 
     // Recorrer la base de datos y agregar los pokémon que coincidan con la búsqueda a la lista de resultados
-    for (int i = 0; i < size; i++) {
-        if (strcmp(stat, "id") == 0 && database[i].id == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+     while (currentPokemon != NULL){
+        if (strcmp(stat, "id") == 0 && currentPokemon->id == value) {
+             current = (PokemonList *) malloc(sizeof(PokemonList ));
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "name") == 0 && strcmp(database[i].name, stat) == 0) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "name") == 0 && strcmp(currentPokemon->name, stat) == 0) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "form") == 0 && strcmp(database[i].form, stat) == 0) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "form") == 0 && strcmp(currentPokemon->form, stat) == 0) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "type1") == 0 && strcmp(database[i].type1, stat) == 0) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "type1") == 0 && strcmp(currentPokemon->type1, stat) == 0) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "type2") == 0 && strcmp(database[i].type2, stat) == 0) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "type2") == 0 && strcmp(currentPokemon->type2, stat) == 0) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "total") == 0 && database[i].total == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "total") == 0 && currentPokemon->total == value) {
+           
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
+        } else if (strcmp(stat, "hp") == 0 && currentPokemon->hp == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;;
 
-        } else if (strcmp(stat, "hp") == 0 && database[i].hp == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "attack") == 0 && currentPokemon->attack == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "attack") == 0 && database[i].attack == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "defense") == 0 && currentPokemon->defense == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;;
 
-        } else if (strcmp(stat, "defense") == 0 && database[i].defense == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "spAtk") == 0 && currentPokemon->spAtk == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "spAtk") == 0 && database[i].spAtk == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "spDef") == 0 && currentPokemon->spDef == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "spDef") == 0 && database[i].spDef == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "speed") == 0 && currentPokemon->speed == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
-        } else if (strcmp(stat, "speed") == 0 && database[i].speed == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
-
-        } else if (strcmp(stat, "generation") == 0 && database[i].generation == value) {
-            PokemonList *node = (PokemonList*) malloc(sizeof(PokemonList));
-            node->pokemon = database[i];
-            node->next = *result;
-            *result = node;
+        } else if (strcmp(stat, "generation") == 0 && currentPokemon->generation == value) {
+            if (current == NULL) {
+                printf("No se ha podido asignar memoria.\\n");
+                exit(1);
+            }
+            current->next = NULL;
+            if (*result == NULL) 
+            {
+                *result = current;
+            } 
+            else {
+                prev->next = current;
+            }
+            prev = current;
 
         }    
     }
@@ -266,23 +386,23 @@ void showResultList(PokemonList *result){
 
     }
 
-    PokemonList *current = result;
-    while (current != NULL) {
+    PokemonList *currentPokemon = result;
+    while (currentPokemon != NULL) {
         printf("%d %s %s %s %s %d %d %d %d %d %d %d\n",
-               current->pokemon.id,
-               current->pokemon.name,
-               current->pokemon.form,
-               current->pokemon.type1,
-               current->pokemon.type2,
-               current->pokemon.total,
-               current->pokemon.hp,
-               current->pokemon.attack,
-               current->pokemon.defense,
-               current->pokemon.spAtk,
-               current->pokemon.spDef,
-               current->pokemon.speed,
-               current->pokemon.generation);
-        current = current->next;
+                   currentPokemon->id,
+                   currentPokemon->name,
+                   currentPokemon->form,
+                   currentPokemon->type1,
+                   currentPokemon->type2,
+                   currentPokemon->total,
+                   currentPokemon->hp,
+                   currentPokemon->attack,
+                   currentPokemon->defense,
+                   currentPokemon->spAtk,
+                   currentPokemon->spDef,
+                   currentPokemon->speed,
+                   currentPokemon->generation);
+        currentPokemon = currentPokemon->next;
     }
 
 }
@@ -299,33 +419,34 @@ void saveResultList(char *filename, PokemonList *result) {
     }
 
     // Guardar los datos de la lista de resultados en el archivo
-    PokemonList *current = result;
-    while (current != NULL) {
+    PokemonList *currentPokemon = result;
+    while (currentPokemon != NULL) {
         fprintf(fp, "%d,%s,%d,%s,%s,%d,%d,%d,%d,%d,%d,%d\\n",
-               current->pokemon.id,
-               current->pokemon.name,
-               current->pokemon.generation,
-               current->pokemon.type1,
-               current->pokemon.type2,
-               current->pokemon.total,
-               current->pokemon.hp,
-               current->pokemon.attack,
-               current->pokemon.defense,
-               current->pokemon.spAtk,
-               current->pokemon.spDef,
-               current->pokemon.speed);
-        current = current->next;
+                   currentPokemon->id,
+                   currentPokemon->name,
+                   currentPokemon->form,
+                   currentPokemon->type1,
+                   currentPokemon->type2,
+                   currentPokemon->total,
+                   currentPokemon->hp,
+                   currentPokemon->attack,
+                   currentPokemon->defense,
+                   currentPokemon->spAtk,
+                   currentPokemon->spDef,
+                   currentPokemon->speed,
+                   currentPokemon->generation);
+        currentPokemon = currentPokemon->next;
     };
 
     // Cerrar el archivo
     fclose(fp);
 
 }
-*/
+
 int main() {
     PokemonList *database;
     int databaseSize = 0;
-//    PokemonList *searchResult = NULL;
+    PokemonList *searchResult = NULL;
     char command[10];
     int value;
     char stat[MAX_NAME_LENGTH];
@@ -358,7 +479,7 @@ int main() {
 
         } else if (strcmp(command, "search") == 0) {
             scanf("%s %d", stat, &value);
-            //searchPokemon(database, databaseSize, stat, value, &searchResult);
+            searchPokemon(database, databaseSize, stat, value, &searchResult);
 
         //} else if (strcmp(command, "show") == 0 && strcmp(stat, "search") == 0) {
         //   showResultList(searchResult);
