@@ -168,7 +168,7 @@ void showPokemon(PokemonList *database, int id) {
 
 
 //Función para buscar pokémon por stat
-void searchPokemon(PokemonList *database, int size, char *stat, int value, PokemonList **result) {
+void searchPokemon(PokemonList *database, int size, char *stat, char *stat2, int value, PokemonList **result) {
     // Crear la lista de resultados
     *result = NULL;
     PokemonList *currentPokemon = database;
@@ -176,7 +176,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
 
     // Recorrer la base de datos y agregar los pokémon que coincidan con la búsqueda a la lista de resultados
      while (currentPokemon != NULL){        
-        if (strcmp(stat, "name") == 0 && strcmp(currentPokemon->name, value) == 0) {
+        if (strcmp(stat, "name") == 0 && strcmp(currentPokemon->name, stat2) == 0) {
             current = (PokemonList *) malloc(sizeof(PokemonList));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\n");
@@ -203,7 +203,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             }
             prev = current;
 
-        } else if (strcmp(stat, "form") == 0 && strcmp(currentPokemon->form, value) == 0) {
+        } else if (strcmp(stat, "form") == 0 && strcmp(currentPokemon->form, stat2) == 0) {
             current = (PokemonList *) malloc(sizeof(PokemonList));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\n");
@@ -230,7 +230,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             }
             prev = current;
 
-        } else if (strcmp(stat, "type1") == 0 && strcmp(currentPokemon->type1, value) == 0) {
+        } else if (strcmp(stat, "type1") == 0 && strcmp(currentPokemon->type1, stat2) == 0) {
             current = (PokemonList *) malloc(sizeof(PokemonList));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\n");
@@ -257,7 +257,7 @@ void searchPokemon(PokemonList *database, int size, char *stat, int value, Pokem
             }
             prev = current;
 
-        } else if (strcmp(stat, "type2") == 0 && strcmp(currentPokemon->type2, value) == 0) {
+        } else if (strcmp(stat, "type2") == 0 && strcmp(currentPokemon->type2, stat2) == 0) {
             current = (PokemonList *) malloc(sizeof(PokemonList));
             if (current == NULL) {
                 printf("No se ha podido asignar memoria.\n");
@@ -581,6 +581,7 @@ int main() {
     char command[10];
     int value;
     char stat[MAX_NAME_LENGTH];
+    char stat2[MAX_NAME_LENGTH];
     char filename[MAX_NAME_LENGTH];
 
     // Loop infinito para recibir comandos desde la terminal
@@ -606,8 +607,8 @@ int main() {
 
         } else if (strcmp(command, "search") == 0) {
             printf("Creando lista...\n");
-            scanf("%s %d", stat, &value);
-            searchPokemon(database, databaseSize, stat, value, &searchResult);
+            scanf("%s %s %d", stat, stat2, &value);
+            searchPokemon(database, databaseSize, stat, stat2, value, &searchResult);
 
         } else if (strcmp(command, "view") == 0) {
           showResultList(searchResult);
